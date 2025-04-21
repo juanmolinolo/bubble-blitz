@@ -13,6 +13,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
+      propertyPath: nextBubble
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
       propertyPath: bounceHeight
       value: 5
       objectReference: {fileID: 0}
@@ -66,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8539313917203176105, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
       propertyPath: m_Name
-      value: SmallBall Variant
+      value: SmallBubble
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

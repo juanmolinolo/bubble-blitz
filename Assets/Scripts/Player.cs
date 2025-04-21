@@ -1,10 +1,10 @@
 using Assets.Constants;
 using Assets.Enums;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public GameManager gameManager;
     public Animator animator;
     private Direction moveDirection = Direction.Idle;
 
@@ -36,8 +36,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(BallConstants.BALL_TAG))
         {
-            Debug.Log("GAME OVER!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameManager.ShowLoseMenu();
         }
     }
 }

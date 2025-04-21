@@ -165,9 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07703327fa06f3c43b1c233374812d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   rb: {fileID: 8383748461039677034}
-  nextBall: {fileID: 4806815026397811109, guid: 15c376437b4ca794897180dc57384db0, type: 3}
+  nextBubble: {fileID: 4806815026397811109, guid: 15c376437b4ca794897180dc57384db0, type: 3}
   initialForceDirection: 0
-  isOriginalBall: 0
+  isOriginalBubble: 0
   yStartForce: 0
   bounceHeight: 7

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public GameManager gameManager;
     public int levelTime;
 
     private int timeLeft;
@@ -29,7 +30,8 @@ public class Timer : MonoBehaviour
         transform.localScale = new Vector3(xScale, 0.35f, 1);
         if (timeLeft <= 0)
         {
-            Debug.Log("Time's up!");
+            gameManager.ShowLoseMenu();
+            StopCoroutine(Countdown());
         }
     }
 }
