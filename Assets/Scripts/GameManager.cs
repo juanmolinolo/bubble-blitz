@@ -1,3 +1,4 @@
+using Assets.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -63,7 +64,8 @@ public class GameManager : MonoBehaviour
 
     public void GoToMenu()
     {
-        Debug.Log("Menu button clicked");
+        Time.timeScale = 1;
+        SceneManager.LoadScene((int)Scenes.MainMenu);
     }
 
     public void GoToNextLevel()
