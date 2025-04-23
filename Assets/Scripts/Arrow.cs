@@ -42,7 +42,9 @@ public class Arrow : MonoBehaviour
 
         if (collision.CompareTag(BallConstants.BALL_TAG))
         {
-            collision.GetComponent<Bubble>().Split();
+            var collidedBubble = collision.GetComponent<Bubble>();
+            ScoreManager.Instance.AddScore(collidedBubble.score);
+            collidedBubble.Split();
             PlayBubblePopClip();
         }
     }

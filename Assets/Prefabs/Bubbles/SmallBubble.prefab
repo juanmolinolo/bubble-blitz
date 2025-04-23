@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
+      propertyPath: score
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
       propertyPath: nextBall
       value: 
       objectReference: {fileID: 0}

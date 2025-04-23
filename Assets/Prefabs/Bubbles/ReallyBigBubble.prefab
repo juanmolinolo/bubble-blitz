@@ -13,6 +13,10 @@ PrefabInstance:
       value: ReallyBigBubble
       objectReference: {fileID: 0}
     - target: {fileID: 5612128344872237049, guid: 4e51decaa801eef4da2871acbf041986, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5612128344872237049, guid: 4e51decaa801eef4da2871acbf041986, type: 3}
       propertyPath: nextBall
       value: 
       objectReference: {fileID: 4157764702185704167, guid: 4e51decaa801eef4da2871acbf041986, type: 3}
