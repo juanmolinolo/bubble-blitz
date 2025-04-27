@@ -11,22 +11,33 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     private Direction moveDirection = Direction.Idle;
+    private Direction lastDirectionPressed = Direction.Idle;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            Vector2 currentPosition = transform.position;
-            currentPosition.x += PlayerConstants.MOVEMENT_SPEED * Time.deltaTime;
-            transform.position = currentPosition;
-            moveDirection = Direction.Right;
+            lastDirectionPressed = Direction.Left;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            Vector2 currentPosition = transform.position;
-            currentPosition.x -= PlayerConstants.MOVEMENT_SPEED * Time.deltaTime;
-            transform.position = currentPosition;
-            moveDirection = Direction.Left;
+            lastDirectionPressed = Direction.Right;
+        }
+
+        bool leftPressed = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
+        bool rightPressed = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
+
+        if (leftPressed && !rightPressed)
+        {
+            MovePlayer(Direction.Left);
+        }
+        else if (rightPressed && !leftPressed)
+        {
+            MovePlayer(Direction.Right);
+        }
+        else if (rightPressed && leftPressed)
+        {
+            MovePlayer(lastDirectionPressed);
         }
         else
         {
@@ -34,6 +45,23 @@ public class Player : MonoBehaviour
         }
 
         animator.SetInteger(PlayerConstants.MOVEMENT_ANIMATION_VARIABLE, (int)moveDirection);
+    }
+
+    private void MovePlayer(Direction direction)
+    {
+        Vector2 currentPosition = transform.position;
+        
+        if (direction == Direction.Left)
+        {
+            currentPosition.x -= PlayerConstants.MOVEMENT_SPEED * Time.deltaTime;
+        }
+        else if (direction == Direction.Right)
+        {
+            currentPosition.x += PlayerConstants.MOVEMENT_SPEED * Time.deltaTime;
+        }
+
+        transform.position = currentPosition;
+        moveDirection = direction;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
