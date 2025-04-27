@@ -172,3 +172,4 @@ MonoBehaviour:
   isOriginalBubble: 0
   yStartForce: 0
   bounceHeight: 7
+  score: 25

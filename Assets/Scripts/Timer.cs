@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public static Timer Instance;
     public GameManager gameManager;
     public int levelTime;
 
     private int timeLeft;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -33,5 +46,10 @@ public class Timer : MonoBehaviour
             gameManager.ShowLoseMenu();
             StopCoroutine(Countdown());
         }
+    }
+
+    public int GetTimeLeft()
+    {
+        return timeLeft;
     }
 }

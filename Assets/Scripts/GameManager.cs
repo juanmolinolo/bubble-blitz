@@ -1,5 +1,6 @@
 using Assets.Enums;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject winMenu;
     public GameObject loseMenu;
     public Scene nextLevel;
+    public GameObject scoreText;
 
     private readonly List<GameObject> bubbles = new();
 
@@ -44,14 +46,51 @@ public class GameManager : MonoBehaviour
 
     public void ShowWinMenu()
     {
+        // calculate final score(gained score * (time left/2))
+        TextMeshProUGUI finalScoreText = winMenu.transform.Find("FinalScoreText")?.GetComponentInChildren<TextMeshProUGUI>();
+        if (finalScoreText != null)
+        {
+            var timeLeft = Timer.Instance.GetTimeLeft();
+            var score = ScoreManager.Instance.score;
+            var finalScore = score + score * ((float)1 + (timeLeft / 100 * 2));
+            var text = "Score: " + ((int)finalScore).ToString("D4");
+            finalScoreText.text = text;
+        }
+        else
+        {
+            Debug.Log("Didn't find it");
+        }
         Time.timeScale = 0;
         winMenu.SetActive(true);
     }
 
     public void ShowLoseMenu()
     {
+        HideScoreText();
+
+        // Display the score on the center
+        TextMeshProUGUI finalScoreText = loseMenu.transform.Find("FinalScoreText")?.GetComponentInChildren<TextMeshProUGUI>();
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = "Score: " + ScoreManager.Instance.score.ToString("D4");
+        }
+        else
+        {
+            Debug.Log("Didn't find it");
+        }
         Time.timeScale = 0;
+
         loseMenu.SetActive(true);
+    }
+
+    public void ShowScoreText()
+    {
+        scoreText.SetActive(true);
+    }
+
+    public void HideScoreText()
+    {
+        scoreText.SetActive(false);
     }
 
     #endregion Showers

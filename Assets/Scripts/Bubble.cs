@@ -12,6 +12,7 @@ public class Bubble : MonoBehaviour
     public bool isOriginalBubble;
     public float yStartForce;
     public float bounceHeight;
+    public int score;
 
     private bool HasNextBubble => nextBubble != null;
     private bool HasNeverBounced => bounceCount == 0;
