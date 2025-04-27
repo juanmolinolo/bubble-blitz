@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8383748461039677034}
   - component: {fileID: 202851970021369783}
   m_Layer: 9
-  m_Name: Bubble
+  m_Name: BouncyBubbleBig
   m_TagString: Bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 8539313917203176105}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: d35e33406d5b83846bfd58bd3580a3b3, type: 3}
-  m_Color: {r: 0.8901961, g: 0.8627451, b: 0, a: 1}
+  m_Color: {r: 0.43137255, g: 0, b: 0.8627451, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,9 +167,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   rb: {fileID: 8383748461039677034}
-  nextBubble: {fileID: 4806815026397811109, guid: 15c376437b4ca794897180dc57384db0, type: 3}
+  nextBubble: {fileID: 8539313917203176105, guid: 97e62429b10dc8246b8ef5bfb43aa3c7, type: 3}
   initialForceDirection: 0
   isOriginalBubble: 0
   yStartForce: 0
-  bounceHeight: 7
-  scoreValue: 15
+  bounceHeight: 12
+  scoreValue: 20

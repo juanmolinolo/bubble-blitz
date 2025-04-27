@@ -121,5 +121,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextLevel.buildIndex);
     }
 
+    public void GoToLevelTwo()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene((int)Scenes.LevelTwo);
+    }
+
     #endregion Menu interaction
 }
