@@ -21,6 +21,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
+      propertyPath: scoreValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 202851970021369783, guid: 9f8c1ca64eb430c459b70f39e10fc550, type: 3}
       propertyPath: bounceHeight
       value: 5
       objectReference: {fileID: 0}

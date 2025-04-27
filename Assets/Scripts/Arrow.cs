@@ -40,10 +40,9 @@ public class Arrow : MonoBehaviour
         isChainActive = false;
         audioSource.Stop();
 
-        if (collision.CompareTag(BallConstants.BALL_TAG))
+        if (collision.CompareTag(BubbleConstants.BUBBLE_TAG))
         {
             var collidedBubble = collision.GetComponent<Bubble>();
-            ScoreManager.Instance.AddScore(collidedBubble.score);
             collidedBubble.Split();
             PlayBubblePopClip();
         }

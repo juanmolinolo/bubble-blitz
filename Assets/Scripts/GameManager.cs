@@ -6,31 +6,77 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject pauseMenu;
-    public GameObject winMenu;
-    public GameObject loseMenu;
-    public Scene nextLevel;
-    public GameObject scoreText;
+    #region Class properties
 
-    private readonly List<GameObject> bubbles = new();
+    [SerializeField]
+    private GameObject pauseMenu;
 
-    public void RemoveBubble(GameObject bubble)
+    [SerializeField]
+    private GameObject winMenu;
+
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+
+    [SerializeField]
+    private GameObject loseMenu;
+
+    [SerializeField]
+    private Scene nextLevel;
+
+    [SerializeField]
+    internal int levelTime;
+
+    internal int currentScore;
+
+    internal int timeLeft;
+
+    private readonly List<Bubble> activeBubbles = new();
+
+    private double TimeLeftAsPercentage => (double)timeLeft / levelTime * 100;
+
+    #endregion Class properties
+
+    #region Events
+
+    private void Start()
     {
-        bubbles.Remove(bubble);
-        if (bubbles.Count == 0)
+        timeLeft = levelTime;
+        currentScore = 0;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseMenu.activeSelf)
+            {
+                HidePauseMenu();
+            }
+            else
+            {
+                ShowPauseMenu();
+            }
+        }
+    }
+
+    #endregion Events
+
+    public void RemoveBubble(Bubble bubble)
+    {
+        activeBubbles.Remove(bubble);
+        currentScore += bubble.GetBubbleScore(TimeLeftAsPercentage);
+        if (activeBubbles.Count == 0)
         {
             ShowWinMenu();
         }
     }
 
-    public void AddBubble(GameObject bubble)
+    public void AddBubble(Bubble bubble)
     {
-        bubbles.Add(bubble);
+        activeBubbles.Add(bubble);
     }
 
-    #region Menu buttons
-
-    #region Showers
+    #region Menu interaction
 
     public void ShowPauseMenu()
     {
@@ -46,54 +92,16 @@ public class GameManager : MonoBehaviour
 
     public void ShowWinMenu()
     {
-        // calculate final score(gained score * (time left/2))
-        TextMeshProUGUI finalScoreText = winMenu.transform.Find("FinalScoreText")?.GetComponentInChildren<TextMeshProUGUI>();
-        if (finalScoreText != null)
-        {
-            var timeLeft = Timer.Instance.GetTimeLeft();
-            var score = ScoreManager.Instance.score;
-            var finalScore = score + score * ((float)1 + (timeLeft / 100 * 2));
-            var text = "Score: " + ((int)finalScore).ToString("D4");
-            finalScoreText.text = text;
-        }
-        else
-        {
-            Debug.Log("Didn't find it");
-        }
+        scoreText.text = $"Score: {currentScore}";
         Time.timeScale = 0;
         winMenu.SetActive(true);
     }
 
     public void ShowLoseMenu()
     {
-        HideScoreText();
-
-        // Display the score on the center
-        TextMeshProUGUI finalScoreText = loseMenu.transform.Find("FinalScoreText")?.GetComponentInChildren<TextMeshProUGUI>();
-        if (finalScoreText != null)
-        {
-            finalScoreText.text = "Score: " + ScoreManager.Instance.score.ToString("D4");
-        }
-        else
-        {
-            Debug.Log("Didn't find it");
-        }
         Time.timeScale = 0;
-
         loseMenu.SetActive(true);
     }
-
-    public void ShowScoreText()
-    {
-        scoreText.SetActive(true);
-    }
-
-    public void HideScoreText()
-    {
-        scoreText.SetActive(false);
-    }
-
-    #endregion Showers
 
     public void ReplayCurrentLevel()
     {
@@ -113,5 +121,5 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextLevel.buildIndex);
     }
 
-    #endregion Menu buttons
+    #endregion Menu interaction
 }

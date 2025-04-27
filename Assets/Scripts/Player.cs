@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameManager gameManager;
-    public Animator animator;
+    [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
+    private Animator animator;
+
     private Direction moveDirection = Direction.Idle;
 
     void Update()
@@ -34,7 +38,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(BallConstants.BALL_TAG))
+        if (collision.gameObject.CompareTag(BubbleConstants.BUBBLE_TAG))
         {
             gameManager.ShowLoseMenu();
         }

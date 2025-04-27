@@ -5,53 +5,61 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
-    public GameManager gameManager;
-    public Rigidbody2D rb;
-    public GameObject nextBubble;
-    public Direction initialForceDirection;
-    public bool isOriginalBubble;
-    public float yStartForce;
-    public float bounceHeight;
-    public int score;
+    #region Class properties
+
+    [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private GameObject nextBubble;
+
+    [SerializeField]
+    private Direction initialForceDirection;
+
+    [SerializeField]
+    private bool isOriginalBubble;
+
+    [SerializeField]
+    private float yStartForce;
+
+    [SerializeField]
+    private float bounceHeight;
+
+    [SerializeField]
+    private int scoreValue;
+
+    #endregion Class properties
 
     private bool HasNextBubble => nextBubble != null;
     private bool HasNeverBounced => bounceCount == 0;
 
     private int bounceCount = 0;
 
+    #region Events
+
     void Start()
     {
-        RegisterBall();
+        RegisterBubble();
         AddInitialForce();
     }
 
-    private void RegisterBall()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (gameManager == null)
+        if (collision.gameObject.CompareTag(WallConstants.FLOOR_TAG))
         {
-            throw new Exception("GameManager is not assigned");
+            BounceBubble();
         }
-        if (isOriginalBubble)
+        else if (collision.gameObject.CompareTag(WallConstants.ROOF_TAG))
         {
-            gameManager.AddBubble(gameObject);
+            Destroy(gameObject);
+            gameManager.RemoveBubble(this);
         }
     }
 
-    private void AddInitialForce()
-    {
-        if (isOriginalBubble)
-        {
-            yStartForce = BallConstants.Y_START_FORCE;
-        }
-        if (initialForceDirection == Direction.Right)
-        {
-            rb.AddForce(new Vector2(BallConstants.X_START_FORCE, yStartForce), ForceMode2D.Impulse);
-        }
-        else if (initialForceDirection == Direction.Left)
-        {
-            rb.AddForce(new Vector2(-BallConstants.X_START_FORCE, yStartForce), ForceMode2D.Impulse);
-        }
-    }
+    #endregion Events
 
     public void Split()
     {
@@ -61,45 +69,66 @@ public class Bubble : MonoBehaviour
             gameManager.AddBubble(CreateNewBubble(Direction.Left));
         }
         Destroy(gameObject);
-        gameManager.RemoveBubble(gameObject);
+        gameManager.RemoveBubble(this);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public int GetBubbleScore(double timeLeftAsPercentage)
     {
-        if (collision.gameObject.CompareTag(WallConstants.FLOOR_TAG))
+        return (int)Math.Round(scoreValue * timeLeftAsPercentage / 100, 0);
+    }
+
+    #region Helpers
+
+    private void RegisterBubble()
+    {
+        if (isOriginalBubble)
         {
-            BounceBall();
-        }
-        else if (collision.gameObject.CompareTag(WallConstants.ROOF_TAG))
-        {
-            Destroy(gameObject);
-            gameManager.RemoveBubble(gameObject);
+            gameManager.AddBubble(this);
         }
     }
 
-    private void BounceBall()
+    private void AddInitialForce()
+    {
+        if (isOriginalBubble)
+        {
+            yStartForce = BubbleConstants.Y_START_FORCE;
+        }
+        if (initialForceDirection == Direction.Right)
+        {
+            rb.AddForce(new Vector2(BubbleConstants.X_START_FORCE, yStartForce), ForceMode2D.Impulse);
+        }
+        else if (initialForceDirection == Direction.Left)
+        {
+            rb.AddForce(new Vector2(-BubbleConstants.X_START_FORCE, yStartForce), ForceMode2D.Impulse);
+        }
+    }
+
+    private void BounceBubble()
     {
         bounceCount++;
+        scoreValue--;
         rb.linearVelocityY = 0;
         rb.AddForce(Vector2.up * bounceHeight, ForceMode2D.Impulse);
     }
 
-    private GameObject CreateNewBubble(Direction initialForceDirection)
+    private Bubble CreateNewBubble(Direction initialForceDirection)
     {
         Vector2 directionVector = initialForceDirection == Direction.Right ? Vector2.right : Vector2.left;
-        GameObject gameObject = Instantiate(nextBubble, rb.position + directionVector / BallConstants.BALL_SEPARATION_DIVISOR, Quaternion.identity);
-        Bubble newBall = gameObject.GetComponent<Bubble>();
-        newBall.gameManager = gameManager;
-        newBall.initialForceDirection = initialForceDirection;
-        newBall.isOriginalBubble = false;
+        GameObject gameObject = Instantiate(nextBubble, rb.position + directionVector / BubbleConstants.BUBBLE_SEPARATION_DIVISOR, Quaternion.identity);
+        Bubble newBubble = gameObject.GetComponent<Bubble>();
+        newBubble.gameManager = gameManager;
+        newBubble.initialForceDirection = initialForceDirection;
+        newBubble.isOriginalBubble = false;
         if (HasNeverBounced)
         {
-            newBall.yStartForce = yStartForce * BallConstants.Y_START_FORCE_MULTIPLIER;
+            newBubble.yStartForce = yStartForce * BubbleConstants.Y_START_FORCE_MULTIPLIER;
         }
         else
         {
-            newBall.yStartForce = yStartForce;
+            newBubble.yStartForce = yStartForce;
         }
-        return gameObject;
+        return newBubble;
     }
+
+    #endregion Helpers
 }
