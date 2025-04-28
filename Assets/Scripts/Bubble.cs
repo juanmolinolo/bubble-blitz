@@ -14,6 +14,9 @@ public class Bubble : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField]
+    private SpriteRenderer spriteRenderer;
+
+    [SerializeField]
     private GameObject nextBubble;
 
     [SerializeField]
@@ -119,6 +122,7 @@ public class Bubble : MonoBehaviour
         newBubble.gameManager = gameManager;
         newBubble.initialForceDirection = initialForceDirection;
         newBubble.isOriginalBubble = false;
+        newBubble.spriteRenderer.color = spriteRenderer.color;
         if (HasNeverBounced)
         {
             newBubble.yStartForce = yStartForce * BubbleConstants.Y_START_FORCE_MULTIPLIER;

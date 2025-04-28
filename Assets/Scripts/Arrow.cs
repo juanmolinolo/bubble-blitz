@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    public Rigidbody2D player;
-    public AudioSource audioSource;
-    public AudioClip arrowMovementClip;
-    public AudioClip bubblePopClip;
-    public Rigidbody2D rb;
+    [SerializeField]
+    private Rigidbody2D player;
+
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip arrowMovementClip;
+
+    [SerializeField]
+    private AudioClip bubblePopClip;
+
+    [SerializeField]
+    private Rigidbody2D rb;
 
     private static bool isChainActive;
 

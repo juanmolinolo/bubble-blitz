@@ -10,6 +10,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip punchClip;
+
     private Direction moveDirection = Direction.Idle;
 
     void Update()
@@ -40,6 +46,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(BubbleConstants.BUBBLE_TAG))
         {
+            audioSource.PlayOneShot(punchClip);
             gameManager.ShowLoseMenu();
         }
     }

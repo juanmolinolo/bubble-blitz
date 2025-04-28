@@ -1,4 +1,5 @@
 using Assets.Enums;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,13 @@ public class GameManager : MonoBehaviour
     #region Class properties
 
     [SerializeField]
+    private GameObject levelMenu;
+
+    [SerializeField]
     private GameObject pauseMenu;
+
+    [SerializeField]
+    private TextMeshProUGUI muteText;
 
     [SerializeField]
     private GameObject winMenu;
@@ -21,7 +28,7 @@ public class GameManager : MonoBehaviour
     private GameObject loseMenu;
 
     [SerializeField]
-    private Scene nextLevel;
+    private Scenes nextLevel;
 
     [SerializeField]
     internal int levelTime;
@@ -34,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     private double TimeLeftAsPercentage => (double)timeLeft / levelTime * 100;
 
+    private bool IsMuted => AudioListener.volume == 0;
+
     #endregion Class properties
 
     #region Events
@@ -42,6 +51,17 @@ public class GameManager : MonoBehaviour
     {
         timeLeft = levelTime;
         currentScore = 0;
+
+        Time.timeScale = 0;
+        levelMenu.SetActive(true);
+        StartCoroutine(HideLevelMenu());
+    }
+
+    private IEnumerator HideLevelMenu()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        levelMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -76,6 +96,20 @@ public class GameManager : MonoBehaviour
         activeBubbles.Add(bubble);
     }
 
+    public void MuteOrUnmute()
+    {
+        if (IsMuted)
+        {
+            AudioListener.volume = 1;
+            muteText.text = "MUTE";
+        }
+        else
+        {
+            AudioListener.volume = 0;
+            muteText.text = "UNMUTE";
+        }
+    }
+
     #region Menu interaction
 
     public void ShowPauseMenu()
@@ -92,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowWinMenu()
     {
-        scoreText.text = $"Score: {currentScore}";
+        scoreText.text = $"SCORE: {currentScore}";
         Time.timeScale = 0;
         winMenu.SetActive(true);
     }
@@ -118,7 +152,7 @@ public class GameManager : MonoBehaviour
     public void GoToNextLevel()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(nextLevel.buildIndex);
+        SceneManager.LoadScene((int)nextLevel);
     }
 
     #endregion Menu interaction
