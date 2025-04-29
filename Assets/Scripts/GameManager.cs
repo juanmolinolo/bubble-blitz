@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     private bool IsMuted => AudioListener.volume == 0;
 
+    private bool IsPauseDisabled => Time.timeScale == 0;
+
     #endregion Class properties
 
     #region Events
@@ -114,8 +116,11 @@ public class GameManager : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        Time.timeScale = 0;
-        pauseMenu.SetActive(true);
+        if (!IsPauseDisabled)
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
     }
 
     public void HidePauseMenu()

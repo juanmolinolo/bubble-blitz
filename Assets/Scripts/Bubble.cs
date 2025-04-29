@@ -26,9 +26,6 @@ public class Bubble : MonoBehaviour
     private bool isOriginalBubble;
 
     [SerializeField]
-    private float yStartForce;
-
-    [SerializeField]
     private float bounceHeight;
 
     [SerializeField]
@@ -37,7 +34,10 @@ public class Bubble : MonoBehaviour
     #endregion Class properties
 
     private bool HasNextBubble => nextBubble != null;
+
     private bool HasNeverBounced => bounceCount == 0;
+
+    private float yStartForce;
 
     private int bounceCount = 0;
 
@@ -123,6 +123,7 @@ public class Bubble : MonoBehaviour
         newBubble.initialForceDirection = initialForceDirection;
         newBubble.isOriginalBubble = false;
         newBubble.spriteRenderer.color = spriteRenderer.color;
+        newBubble.bounceCount = bounceCount;
         if (HasNeverBounced)
         {
             newBubble.yStartForce = yStartForce * BubbleConstants.Y_START_FORCE_MULTIPLIER;
