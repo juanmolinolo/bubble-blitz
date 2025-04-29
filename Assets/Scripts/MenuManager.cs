@@ -10,10 +10,19 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private GameObject levelPickerMenu;
 
+    [SerializeField]
+    private GameObject guideMenu;
+
     public void Play()
     {
         mainMenu.SetActive(false);
         levelPickerMenu.SetActive(true);
+    }
+
+    public void Guide()
+    {
+        mainMenu.SetActive(false);
+        guideMenu.SetActive(true);
     }
 
     public void Quit()
@@ -24,6 +33,7 @@ public class MenuManager : MonoBehaviour
     public void Back()
     {
         levelPickerMenu.SetActive(false);
+        guideMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
 

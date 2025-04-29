@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
     #region Class properties
 
     [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip wonClip;
+
+    [SerializeField]
     private GameObject levelMenu;
 
     [SerializeField]
@@ -89,6 +95,7 @@ public class GameManager : MonoBehaviour
         currentScore += bubble.GetBubbleScore(TimeLeftAsPercentage);
         if (activeBubbles.Count == 0)
         {
+            audioSource.PlayOneShot(wonClip);
             ShowWinMenu();
         }
     }
